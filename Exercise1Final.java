@@ -291,52 +291,83 @@ public class Exercise1Final {
 					}
 				}	
 			}
-			
+			boolean flag0 = false; //check if one or both of numbers have value 0
 			for (int u = 0; u < numbers.length; u++) {
 				if (numbers[u].equals(parts[thesiTelesti])) { //if numbers[u] has the value of operator
 					numbers[u] = parts[thesiTelesti + 1]; //save the third part of string
+					if (numbers[u].equals("0")) {
+						flag0 = true;
+					}
 				}
 			}
 			
 			//check which is the array that the number is content of
+			if (flag0 == false) {
 			
+				for (int r = 0; r < numbers.length; r++) {
+					boolean flag1 = findString(hellenic, numbers[r]); //check if the number is in hellenic array
+					boolean flag2 = findString(latin, numbers[r]); //check if the number is in latin array
+					boolean flag3 = findString(arabic, numbers[r]); //check if the number is in arabic array
+					if (flag1 == true) { 
+						finalNumbers[r] = letterToNumber(hellenic, numbers[r]); //checking the position which is equal to the value in decimal
 			
-			for (int r = 0; r < numbers.length; r++) {
-				boolean flag1 = findString(hellenic, numbers[r]); //check if the number is in hellenic array
-				boolean flag2 = findString(latin, numbers[r]); //check if the number is in latin array
-				boolean flag3 = findString(arabic, numbers[r]); //check if the number is in arabic array
-				if (flag1 == true) { 
-					finalNumbers[r] = letterToNumber(hellenic, numbers[r]); //checking the position which is equal to the value in decimal
-		
-				} else if (flag2 == true) { 
-					finalNumbers[r] = letterToNumber(latin, numbers[r]); //checking the position which is equal to the value in decimal
+					} else if (flag2 == true) { 
+						finalNumbers[r] = letterToNumber(latin, numbers[r]); //checking the position which is equal to the value in decimal
+					
+					} else if (flag3 == true) { 
+						finalNumbers[r] = letterToNumber(arabic, numbers[r]); //checking the position which is equal to the value in decimal
+					}		
+				}	
 				
-				} else if (flag3 == true) { 
-					finalNumbers[r] = letterToNumber(arabic, numbers[r]); //checking the position which is equal to the value in decimal
-				}		
-			}	
+				int finalSum = 1;
+				if (parts[thesiTelesti].equals("+")) {
+					finalSum = 0;  //final calculation
+					for (int l = 0; l < finalNumbers.length; l++) {
+						finalSum = finalSum + finalNumbers[l]; //the final number in arabic arithmetics
+					}
+				} else if (parts[thesiTelesti].equals("-")) {
+					finalSum = finalNumbers[0] - finalNumbers[1]; //the final number in arabic arithmetics
+					
+				} else if (parts[thesiTelesti].equals("*")) {
+					finalSum = 1;  //final calculation
+					for (int l = 0; l < finalNumbers.length; l++) {
+						finalSum = finalSum * finalNumbers[l]; //the final number in arabic arithmetics
+					}
+				} else if (parts[thesiTelesti].equals("/")) {
+					finalSum = finalNumbers[0] / finalNumbers[1]; //the final number in arabic arithmetics
+				}
+					
+				
+				
+				System.out.print("The final number in Arabic Numerals is ");
+				System.out.println(finalSum);
+				if (finalSum == 0) {
+					System.out.println("In Roman Numericals numbers start from I");
+					System.out.println("In Hellenic Numericals numbers start from Á'");
+				
+				} else if (finalSum < 0) {
+					System.out.println("Please insert only non-negative numbers.Try again!");
+					System.out.println("If you want subtraction, first number > second number");
+				} else {
+					String finalSumLatin = latin[finalSum - 1]; //the final number in latin arithmetics
+					String finalSumHellenic = hellenic[finalSum - 1]; //the final number in hellenic arithmetics
+					System.out.print("The final number in Roman Numerals is ");
+					System.out.println(finalSumLatin);
+					System.out.print("The final number in Hellenic Numerals is ");
+					System.out.println(finalSumHellenic);
+				}
 			
-			int finalSum = 0;  //final calculation
-			for (int l = 0; l < finalNumbers.length; l++) {
-				finalSum = finalSum + finalNumbers[l]; //the final number in arabic arithmetics
+			} else { 
+				System.out.println("Please insert only non-negative numbers.Try again!");
 			}
 			
-			System.out.print("The final number in Arabic Numerals is ");
-			System.out.println(finalSum);
-			String finalSumLatin = latin[finalSum - 1]; //the final number in latin arithmetics
-			String finalSumHellenic = hellenic[finalSum - 1]; //the final number in hellenic arithmetics
-			System.out.print("The final number in Roman Numerals is ");
-			System.out.println(finalSumLatin);
-			System.out.print("The final number in Hellenic Numerals is ");
-			System.out.println(finalSumHellenic);
-				
 			System.out.println("");
 			System.out.print("Please insert the arithmetic expression you want to be calculated in this way: number1(space)arithmetic operator(space)number2 ");
 			ekf = scanner.nextLine();
 			System.out.println("");
 			
+		
 		}
-
 	} // end of main
 } // end of class
 
